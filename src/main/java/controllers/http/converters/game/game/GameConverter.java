@@ -10,10 +10,12 @@ import main.java.services.DBServices.TableService;
 import main.java.services.DBServices.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class GameConverter implements Converter<GameRepresentation, Game> {
 
     @Autowired

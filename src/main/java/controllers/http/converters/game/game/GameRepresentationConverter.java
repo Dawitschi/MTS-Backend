@@ -6,10 +6,11 @@ import main.java.databank.game.Score;
 import main.java.services.DBServices.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
 public class GameRepresentationConverter implements Converter<Game, GameRepresentation> {
 
     @Autowired

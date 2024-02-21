@@ -109,7 +109,8 @@ public class GameService {
 
         return game;
     }
-    public Game createGame(LocalDateTime localDateTime,Player a1,Player a2, Player b1, Player b2, Integer scoreA, Integer scoreB ) {
+
+    public Game createGame(LocalDateTime localDateTime,Player a1,Player a2, Player b1, Player b2, Integer scoreA, Integer scoreB , boolean gamefinished, Table table) {
         Game game = new Game();
 
         Set<GamePlayer> teamAGameplayers = new HashSet<>();
@@ -119,7 +120,6 @@ public class GameService {
         teamA.setGame(game);
         Team teamB = new Team(teamBGameplayers);
         teamB.setGame(game);
-
 
         GamePlayer ga1 = new GamePlayer(-1,a1,teamA,a1.getElo());
         GamePlayer ga2 = new GamePlayer(-1,a2,teamA,a2.getElo());
@@ -136,7 +136,8 @@ public class GameService {
         game.setTeam2(teamB);
         game.setTeam1Score(scoreA);
         game.setTeam2Score(scoreB);
-        game.setGameFinished(true);
+        game.setGameFinished(gamefinished);
+        game.setTable(table);
         gameRepository.save(game);
         return game;
     }

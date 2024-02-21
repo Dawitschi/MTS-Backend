@@ -47,7 +47,7 @@ public class GameController {
      * @param n The number of games
      * @return the n most recent games played on a Table
      */
-    @GetMapping(value = "/fromTable")
+    @GetMapping(value = "/fromTableN")
     public List<GameRepresentation> getGamesFromTable(Integer tableID,Integer n) {
         Table table = tableService.getTable(tableID);
         List<Game> games = tableService.getRecentGames(table, n);
@@ -64,13 +64,23 @@ public class GameController {
      * @param tableID The Table
      * @return All games played on that table
      */
-    @GetMapping(value = "/fromTable")
+    @GetMapping(value = "/fromTableAll")
     public List<GameRepresentation> getGamesFromTable(Integer tableID) {
         Table table = tableService.getTable(tableID);
         List<Game> games = table.getGames();
         List<GameRepresentation> gameRepresentations = new ArrayList<>();
         games.forEach(game -> gameRepresentations.add(defaultConversionService.convert(game, GameRepresentation.class)));
         return gameRepresentations;
+    }
+
+    /**
+     * @param tableID The Table
+     * @return The currently played Game
+     */
+    @GetMapping(value = "/fromTableOngoing")
+    public GameRepresentation getCurrentGameFromTable(Integer tableID) {
+        Table table = tableService.getTable(tableID);
+        return defaultConversionService.convert(tableService.getCurrentGame(table), GameRepresentation.class);
     }
 
 

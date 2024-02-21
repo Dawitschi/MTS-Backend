@@ -24,6 +24,13 @@ public class TableService {
     }
 
     /**
+     * @return all Tables
+     */
+    public List<Table> getAllTables() {
+        return tableRepository.findAll();
+    }
+
+    /**
      * @param table The table the games were played on
      * @param n The number of games
      * @return the n most recent games played on a Table
@@ -33,6 +40,14 @@ public class TableService {
         List<Game> games = table.getGames();
         games.sort(Comparator.comparing(Game::getTimeOfGame));
         return games.subList(0, n);
+    }
+
+    /**
+     * @param table the table
+     * @return the game being currently played or null
+     */
+    public Game getCurrentGame(Table table) {
+        return tableRepository.findCurrentGame(table.getTable_ID());
     }
 
 }

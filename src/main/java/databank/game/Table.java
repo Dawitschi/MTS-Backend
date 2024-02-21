@@ -2,6 +2,7 @@ package main.java.databank.game;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,13 +26,13 @@ public class Table {
 
     }
 
-    public Table(Integer table_ID, List<Game> games, String name, long longitude, long latitude) {
-        this.table_ID = table_ID;
-        this.games = games;
+    public Table(String name, long longitude, long latitude) {
         this.name = name;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.games = new ArrayList<>();
     }
+
 
     public List<Game> getGames() {
         return games;

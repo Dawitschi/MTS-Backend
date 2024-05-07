@@ -1,6 +1,12 @@
 package main.java.services.DBServices;
 
-import main.java.databank.game.*;
+import main.java.databank.game.game.Game;
+import main.java.databank.game.game.GameRepository;
+import main.java.databank.game.gameplayer.GamePlayer;
+import main.java.databank.game.player.Player;
+import main.java.databank.game.score.Score;
+import main.java.databank.game.table.Table;
+import main.java.databank.game.team.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,19 +20,7 @@ import java.util.Set;
 public class GameService {
 
     @Autowired
-    private TeamService teamService;
-
-    /**
-     * The gameRepository is basically the connection between the DAO and the Game table
-     */
-    @Autowired
     private GameRepository gameRepository;
-
-    @Autowired
-    private GameplayerService gameplayerService;
-
-    @Autowired
-    private ScoreService scoreService;
 
     public Game getGamebyID(Integer id) {
         return gameRepository.findById(id).get();
@@ -38,38 +32,6 @@ public class GameService {
 
     public void saveGame(Game game) {
         gameRepository.save(game);
-        /*
-        Game game1 = new Game();
-        gameRepository.save(game1);
-
-
-        Set<GamePlayer> teamAGameplayers = new HashSet<>();
-        Set<GamePlayer> teamBGameplayers = new HashSet<>();
-        Team teamA = new Team(teamAGameplayers);
-        Team teamB = new Team(teamBGameplayers);
-        teamService.saveTeam(teamA);
-        teamService.saveTeam(teamB);
-
-
-        for(GamePlayer gamePlayer:game.getTeam1().getPlayers()) gameplayerService.saveGamePlayer(gamePlayer);
-        for(GamePlayer gamePlayer:game.getTeam2().getPlayers()) gameplayerService.saveGamePlayer(gamePlayer);
-
-
-        teamAGameplayers = game.getTeam1().getPlayers();
-        teamBGameplayers = game.getTeam2().getPlayers();
-        teamA.setPlayers(teamAGameplayers);
-        teamB.setPlayers(teamBGameplayers);
-        teamService.saveTeam(teamA);
-        teamService.saveTeam(teamB);
-
-        game1.setTimeOfGame(game.getTimeOfGame());
-        game1.setTeam1(teamA);
-        game1.setTeam2(teamB);
-        game1.setTeam1Score(game.getTeam1Score());
-        game1.setTeam2Score(game.getTeam2Score());
-        game1.setGameFinished(game.isGameFinished());
-        gameRepository.save(game1);
-         */
     }
 
     public boolean isTeamWinningTeam(Team team) {
@@ -79,7 +41,7 @@ public class GameService {
         } else return game.getTeam2Score() > game.getTeam1Score();
     }
 
-    public Game createGame(Player a1,Player a2, Player b1, Player b2, Integer scoreA, Integer scoreB ) {
+    public Game createGame(Player a1, Player a2, Player b1, Player b2, Integer scoreA, Integer scoreB ) {
         Game game = new Game();
         gameRepository.save(game);
 

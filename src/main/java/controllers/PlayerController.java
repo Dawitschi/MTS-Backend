@@ -1,7 +1,7 @@
 package main.java.controllers;
 
-import main.java.controllers.http.objects.PlayerRepresentation;
-import main.java.databank.game.Player;
+import main.java.controllers.http.dtos.PlayerDTO;
+import main.java.databank.game.player.Player;
 import main.java.services.DBServices.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.support.DefaultConversionService;
@@ -17,7 +17,6 @@ import java.util.List;
 @RequestMapping("/Player")
 public class PlayerController {
 
-
     @Autowired
     private PlayerService playerService;
 
@@ -25,22 +24,18 @@ public class PlayerController {
     private DefaultConversionService defaultConversionService;
 
     @RequestMapping(value = "/newPlayer", method = RequestMethod.POST)
-    public PlayerRepresentation submitPlayer(PlayerRepresentation playerRepresentation) {
-        Player player = defaultConversionService.convert(playerRepresentation, Player.class);
+    public PlayerDTO submitPlayer(PlayerDTO playerDTO) {
+        Player player = defaultConversionService.convert(playerDTO, Player.class);
         playerService.savePlayer(player);
-        return playerRepresentation;
+        return playerDTO;
     }
 
-    /**
-     * Gives a list of all players in the database.
-     * @return The list of all saved Players
-     */
     @GetMapping(path="/allPlayers")
-    public Iterable<PlayerRepresentation> getAllPlayerTable() {
-        List<PlayerRepresentation> playerRepresentations = new ArrayList<>();
+    public Iterable<PlayerDTO> getAllPlayerTable() {
+        List<PlayerDTO> playerDTOS = new ArrayList<>();
         for (Player player : playerService.getAllPlayers())
-            playerRepresentations.add(defaultConversionService.convert(player, PlayerRepresentation.class));
-        return playerRepresentations;
+            playerDTOS.add(defaultConversionService.convert(player, PlayerDTO.class));
+        return playerDTOS;
     }
 
 

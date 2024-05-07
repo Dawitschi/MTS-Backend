@@ -1,10 +1,11 @@
 package main.java.services;
 
-import main.java.databank.game.*;
-import main.java.exceptions.InvalidScoreException;
+import main.java.databank.game.game.Game;
+import main.java.databank.game.gameplayer.GamePlayer;
+import main.java.databank.game.player.Player;
+import main.java.databank.game.score.Score;
+import main.java.databank.game.team.Team;
 import main.java.services.DBServices.GameService;
-import main.java.services.DBServices.PlayerService;
-import main.java.services.DBServices.ScoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.HashMap;
  * This class is a helper class.
  * It does all the elo adjustments in the system.
  * Most algorithms in the class are loosely based on the following sources:
- * Source: https://de.wikipedia.org/wiki/Elo-Zahl
+ * Source: <a href="https://de.wikipedia.org/wiki/Elo-Zahl">wikipedia</a>
  */
 @Service
 public class EloCalculatorService {
@@ -29,32 +30,18 @@ public class EloCalculatorService {
      */
     final double scaleGradation = 400;
 
-
-    @Autowired
-    private PlayerService playerService;
-
-    @Autowired
-    private ScoreService scoreService;
-
     @Autowired
     private GameService gameService;
 
     /**
      * This method reevaluates the players Elos after a game. And saves all participating Entitys of the game
-     * Reference: https://de.wikipedia.org/wiki/Elo-Zahl#Erwartungswert
-     * Section: "Berechnung", especially "Anpassung der Elo-Zahl"
      */
-
-
      public void reevaluateElos(Game game) {
 
         //Create the score
         HashMap<Team,Integer> score = new HashMap<>();
         score.put(game.getTeam1(),game.getTeam1Score());
         score.put(game.getTeam2(),game.getTeam2Score());
-
-        //Check if score is invalid
-        if(!checkScore(score)) return;
 
         //Get the teams average elo of each team
         HashMap<Team, Double> teamElos = new HashMap<>();
@@ -74,23 +61,27 @@ public class EloCalculatorService {
 
     private void save(Game game, HashMap<Player, Double> playerEloIncrease) {
          for(GamePlayer gamePlayer : game.getTeam1().getPlayers()) {
-             Score score = new Score(gamePlayer.getPlayer(),
+             Score score = new Score(
+                     gamePlayer.getPlayer(),
                      game,
                      game.getTimeOfGame(),
                      gameService.isTeamWinningTeam(game.getTeam1()),
                      playerEloIncrease.get(gamePlayer.getPlayer()),
                      game.getTeam1Score(),
-                     game.getTeam2Score());
+                     game.getTeam2Score()
+             );
              gameService.addScore(game, score);
          }
          for(GamePlayer gamePlayer : game.getTeam2().getPlayers()) {
-             Score score = new Score(gamePlayer.getPlayer(),
+             Score score = new Score(
+                     gamePlayer.getPlayer(),
                      game,
                      game.getTimeOfGame(),
                      gameService.isTeamWinningTeam(game.getTeam2()),
                      playerEloIncrease.get(gamePlayer.getPlayer()),
                      game.getTeam2Score(),
-                     game.getTeam1Score());
+                     game.getTeam1Score()
+             );
              gameService.addScore(game, score);
          }
          gameService.saveGame(game);
@@ -226,31 +217,5 @@ public class EloCalculatorService {
             exponent.put(team,Math.pow(10d,(teamElos.get(team)/scaleGradation)));
         }
         return exponent;
-    }
-
-    /**
-     * If the given score is valid the return value is true.
-     * TO-DO: Check the checks for relevance (due to structure change of game, etc.)
-     * @param score The score to be checked
-     * @return The validity of the score
-     */
-    private boolean checkScore(HashMap<Team, Integer> score) throws InvalidScoreException {
-        if(score.keySet().isEmpty()) {
-            throw new InvalidScoreException("No teams in score");
-        }
-        if(score.keySet().size() == 1) {
-            throw new InvalidScoreException("One teams in score");
-        }
-
-        //Check if the given Scores team sizes are valid
-        for(Team team : score.keySet()) {
-            if(team.isEmpty()) {
-                throw new InvalidScoreException("One team in score has no players");
-            }
-            if(team.size() > 2) {
-                throw new InvalidScoreException("One team has more than two players");
-            }
-        }
-        return true;
     }
 }

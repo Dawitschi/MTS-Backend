@@ -1,9 +1,9 @@
 package main.java.controllers;
 
-import main.java.controllers.http.objects.GameRepresentation;
+import main.java.controllers.http.dtos.GameDTO;
 import main.java.controllers.validators.GameCreationInfoValidator;
-import main.java.databank.game.Game;
-import main.java.databank.game.Table;
+import main.java.databank.game.game.Game;
+import main.java.databank.game.table.Table;
 import main.java.services.DBServices.TableService;
 import main.java.services.EloCalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,54 +36,33 @@ public class GameController {
     }
 
     @PostMapping(value = "/newGame")
-    public GameRepresentation newGame(GameRepresentation gameRepresentation) {
-        Game game = defaultConversionService.convert(gameRepresentation, Game.class);
+    public GameDTO newGame(GameDTO gameDTO) {
+        Game game = defaultConversionService.convert(gameDTO, Game.class);
         eloCalculatorService.reevaluateElos(game);
-        return gameRepresentation;
+        return gameDTO;
     }
 
-    /**
-     * @param tableID The table the games where played on
-     * @param n The number of games
-     * @return the n most recent games played on a Table
-     */
     @GetMapping(value = "/fromTableN")
-    public List<GameRepresentation> getGamesFromTable(Integer tableID,Integer n) {
+    public List<GameDTO> getGamesFromTable(Integer tableID, Integer n) {
         Table table = tableService.getTable(tableID);
         List<Game> games = tableService.getRecentGames(table, n);
-        List<GameRepresentation> gameRepresentations = new ArrayList<>();
-        games.forEach(game -> gameRepresentations.add(defaultConversionService.convert(game, GameRepresentation.class)));
-        return gameRepresentations;
+        List<GameDTO> gameDTOS = new ArrayList<>();
+        games.forEach(game -> gameDTOS.add(defaultConversionService.convert(game, GameDTO.class)));
+        return gameDTOS;
     }
 
-    /**
-     * TODO:    This might be problematic over a large amount of time, however with the currently projected usage
-     *          of this project there seems no need to change from this solution to an alternative. Alternatives may be:
-     *          -getGamesOfTableFromTo(int startIndex, int endIndex)
-     *          -or just to delete this and just solely use getGamesFromTable(Integer tableID,Integer n)
-     * @param tableID The Table
-     * @return All games played on that table
-     */
     @GetMapping(value = "/fromTableAll")
-    public List<GameRepresentation> getGamesFromTable(Integer tableID) {
+    public List<GameDTO> getGamesFromTable(Integer tableID) {
         Table table = tableService.getTable(tableID);
         List<Game> games = table.getGames();
-        List<GameRepresentation> gameRepresentations = new ArrayList<>();
-        games.forEach(game -> gameRepresentations.add(defaultConversionService.convert(game, GameRepresentation.class)));
-        return gameRepresentations;
+        List<GameDTO> gameDTOS = new ArrayList<>();
+        games.forEach(game -> gameDTOS.add(defaultConversionService.convert(game, GameDTO.class)));
+        return gameDTOS;
     }
 
-    /**
-     * @param tableID The Table
-     * @return The currently played Game
-     */
     @GetMapping(value = "/fromTableOngoing")
-    public GameRepresentation getCurrentGameFromTable(Integer tableID) {
+    public GameDTO getCurrentGameFromTable(Integer tableID) {
         Table table = tableService.getTable(tableID);
-        return defaultConversionService.convert(tableService.getCurrentGame(table), GameRepresentation.class);
+        return defaultConversionService.convert(tableService.getCurrentGame(table), GameDTO.class);
     }
-
-
-
-
 }

@@ -1,7 +1,7 @@
 package main.java.controllers;
 
-import main.java.controllers.http.objects.PlayerRepresentation;
-import main.java.databank.game.Player;
+import main.java.controllers.http.dtos.PlayerDTO;
+import main.java.databank.game.player.Player;
 import main.java.services.LeaderboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.support.DefaultConversionService;
@@ -23,23 +23,23 @@ public class LeaderboardController {
     private DefaultConversionService defaultConversionService;
 
     @GetMapping("/Daily")
-    public List<PlayerRepresentation> getDailyLeaderboard() {
-        List<PlayerRepresentation> list = new ArrayList<>();
-        for (Player player : leaderboardService.getDailyLeaderboard()) list.add(defaultConversionService.convert(player, PlayerRepresentation.class));
+    public List<PlayerDTO> getDailyLeaderboard() {
+        List<PlayerDTO> list = new ArrayList<>();
+        for (Player player : leaderboardService.getDailyLeaderboard()) list.add(defaultConversionService.convert(player, PlayerDTO.class));
         return list;
     }
 
     @GetMapping("/Weekly")
-    public List<PlayerRepresentation> getWeeklyLeaderboard() {
-        List<PlayerRepresentation> list = new ArrayList<>();
-        for (Player player : leaderboardService.getWeeklyLeaderboard()) list.add(defaultConversionService.convert(player, PlayerRepresentation.class));
+    public List<PlayerDTO> getWeeklyLeaderboard() {
+        List<PlayerDTO> list = new ArrayList<>();
+        for (Player player : leaderboardService.getWeeklyLeaderboard()) list.add(defaultConversionService.convert(player, PlayerDTO.class));
         return list;
     }
 
     @GetMapping("/Alltime")
-    public List<PlayerRepresentation> getAllTimeLeaderboard() {
-        List<PlayerRepresentation> list = new ArrayList<>();
-        for (Player player : leaderboardService.getAllTimeLeaderboard()) list.add(defaultConversionService.convert(player, PlayerRepresentation.class));
+    public List<PlayerDTO> getAllTimeLeaderboard() {
+        List<PlayerDTO> list = new ArrayList<>();
+        for (Player player : leaderboardService.getAllTimeLeaderboard()) list.add(defaultConversionService.convert(player, PlayerDTO.class));
         return list;
     }
 

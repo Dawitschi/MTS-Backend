@@ -1,8 +1,8 @@
 package main.java.services.DBServices;
 
-import main.java.databank.game.Game;
-import main.java.databank.game.Table;
-import main.java.databank.game.TableRepository;
+import main.java.databank.game.game.Game;
+import main.java.databank.game.table.Table;
+import main.java.databank.game.table.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +23,6 @@ public class TableService {
         return tableRepository.getReferenceById(id);
     }
 
-    /**
-     * @return all Tables
-     */
     public List<Table> getAllTables() {
         return tableRepository.findAll();
     }

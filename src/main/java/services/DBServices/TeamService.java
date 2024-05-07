@@ -1,16 +1,13 @@
 package main.java.services.DBServices;
 
-import main.java.databank.game.Team;
-import main.java.databank.game.TeamRepository;
+import main.java.databank.game.team.Team;
+import main.java.databank.game.team.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TeamService {
 
-    /**
-     * The teamRepository is basically the connection between the DAO and the Team table
-     */
     @Autowired
     private TeamRepository teamRepository;
 

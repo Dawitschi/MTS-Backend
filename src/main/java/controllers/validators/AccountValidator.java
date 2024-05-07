@@ -16,7 +16,6 @@ public class AccountValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Account account = (Account) target;
 
-        //Example so u idiot dont forget
         if(!account.getUsername().contains("Cool")) errors.rejectValue("username", "notCoolEnough","Your username is not cool enough");
     }
 }

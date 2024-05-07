@@ -1,7 +1,7 @@
 package main.java.services.DBServices;
 
-import main.java.databank.game.Player;
-import main.java.databank.game.PlayerRepository;
+import main.java.databank.game.player.Player;
+import main.java.databank.game.player.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,6 @@ import java.util.NoSuchElementException;
 @Service
 public class PlayerService {
 
-    /**
-     * The playerRepository is basically the connection between the DAO and the Player table
-     */
     @Autowired
     private PlayerRepository playerRepository;
 
@@ -22,9 +19,7 @@ public class PlayerService {
 
     public Player createPlayer(String name, String nickname) {
         Player player = new Player(name,nickname);
-
         playerRepository.save(player);
-
         return player;
     }
 

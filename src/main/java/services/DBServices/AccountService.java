@@ -2,7 +2,7 @@ package main.java.services.DBServices;
 
 import main.java.databank.accounts.Account;
 import main.java.databank.accounts.AccountRepository;
-import main.java.databank.game.Player;
+import main.java.databank.game.player.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

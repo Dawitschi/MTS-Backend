@@ -1,7 +1,7 @@
 package main.java.services.DBServices;
 
-import main.java.databank.game.Score;
-import main.java.databank.game.ScoreRepository;
+import main.java.databank.game.score.Score;
+import main.java.databank.game.score.ScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

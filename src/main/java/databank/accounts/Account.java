@@ -1,12 +1,12 @@
 package main.java.databank.accounts;
 
 import jakarta.persistence.*;
-import main.java.databank.game.Player;
+import main.java.databank.game.player.Player;
 
 import java.util.List;
 
 @Entity
-@Table(name = "Accounts") // Name of the Table
+@Table(name = "Accounts")
 public class Account {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -15,11 +15,9 @@ public class Account {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Player> players;
 
-
     private String password;
 
     private String token;
-
 
     private String username;
 
@@ -27,7 +25,6 @@ public class Account {
     private List<Account> friends;
 
     public Account() {}
-
 
     public Account(List<Player> players, String password, String token, String username, List<Account> friends) {
         this.players = players;

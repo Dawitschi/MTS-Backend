@@ -1,14 +1,12 @@
 package main.java.controllers;
 
 import main.java.controllers.http.dtos.GameDTO;
-import main.java.controllers.validators.GameCreationInfoValidator;
 import main.java.databank.game.game.Game;
 import main.java.databank.game.table.Table;
 import main.java.services.DBServices.TableService;
 import main.java.services.EloCalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.support.DefaultConversionService;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -25,15 +23,8 @@ public class GameController {
     private TableService tableService;
 
     @Autowired
-    private GameCreationInfoValidator gameValidator;
-
-    @Autowired
     private DefaultConversionService defaultConversionService;
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.addValidators(gameValidator);
-    }
 
     @PostMapping(value = "/newGame")
     public GameDTO newGame(GameDTO gameDTO) {

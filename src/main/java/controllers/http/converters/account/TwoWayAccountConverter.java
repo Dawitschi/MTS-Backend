@@ -40,7 +40,7 @@ public class TwoWayAccountConverter extends AbstractTwoWayConverter<Account, Acc
         List<Account> friends = new ArrayList<>();
         for (Integer friendID : accountDTO.friend_IDs()) friends.add(accountService.getAccountbyID(friendID));
 
-        return new Account(players, accountDTO.password(), accountDTO.token(), accountDTO.username(), friends);
+        return new Account(accountDTO.account_ID(),players, accountDTO.password(), accountDTO.token(), accountDTO.username(), friends);
 
     }
 }

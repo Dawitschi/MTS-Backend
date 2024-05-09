@@ -1,6 +1,8 @@
 package main.java.databank.accounts;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import main.java.databank.game.player.Player;
 
 import java.util.List;
@@ -10,15 +12,18 @@ import java.util.List;
 public class Account {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
+    @NotNull
     private Integer account_ID;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Player> players;
 
+    @Size(max = 32, min = 8)
     private String password;
 
     private String token;
 
+    @Size(max = 32, min = 8)
     private String username;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -32,6 +37,27 @@ public class Account {
         this.token = token;
         this.username = username;
         this.friends = friends;
+    }
+
+    public Account(Integer account_ID, List<Player> players, String password, String token, String username, List<Account> friends) {
+        this.account_ID = account_ID;
+        this.players = players;
+        this.password = password;
+        this.token = token;
+        this.username = username;
+        this.friends = friends;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "account_ID=" + account_ID +
+                ", players=" + players +
+                ", password='" + password + '\'' +
+                ", token='" + token + '\'' +
+                ", username='" + username + '\'' +
+                ", friends=" + friends +
+                '}';
     }
 
     public String getToken() {

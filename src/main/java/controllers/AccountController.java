@@ -1,21 +1,18 @@
 package main.java.controllers;
 
-import jakarta.validation.Valid;
 import main.java.controllers.http.dtos.AccountDTO;
-import main.java.controllers.validators.AccountValidator;
+import main.java.controllers.validations.markers.onCreation;
 import main.java.databank.accounts.Account;
 import main.java.services.DBServices.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.support.DefaultConversionService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -24,23 +21,28 @@ import java.util.List;
 public class AccountController {
 
     @Autowired
-    private AccountValidator accountValidator;
-
-    @Autowired
     private AccountService accountService;
 
     @Autowired
     private DefaultConversionService defaultConversionService;
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.addValidators(accountValidator);
-    }
 
     @PostMapping("/newAccount")
-    public ResponseEntity<AccountDTO> submitAccount(@RequestBody @Validated() AccountDTO account, BindingResult bindingResult) {
+    public ResponseEntity<Object> submitAccount(@RequestBody @Validated(onCreation.class) AccountDTO account, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(Arrays.deepToString(bindingResult.getAllErrors().stream().toArray()));
+
+        }
+        accountService.saveAccount(defaultConversionService.convert(account, Account.class));
+        return ResponseEntity.ok(account);
+    }
+
+    @PostMapping("/updateAccount")
+    public ResponseEntity<Object> updateAccount(@RequestBody @Validated AccountDTO account, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            StringBuilder builder = new StringBuilder("The following errors where found: \n");
+            bindingResult.getAllErrors().forEach(err -> builder.append(err.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(builder.toString());
         }
         accountService.saveAccount(defaultConversionService.convert(account, Account.class));
         return ResponseEntity.ok(account);

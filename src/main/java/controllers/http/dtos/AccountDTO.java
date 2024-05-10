@@ -3,13 +3,16 @@ package main.java.controllers.http.dtos;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
-import main.java.controllers.validators.markers.onCreation;
+import main.java.controllers.validations.annotations.ExistsInDB;
+import main.java.controllers.validations.markers.onCreation;
+import main.java.databank.accounts.AccountRepository;
 
 import java.util.List;
 
 public record AccountDTO(
-                        @NotNull
                         @Null(groups = onCreation.class)
+                        @NotNull
+                        @ExistsInDB(repo = AccountRepository.class)
                         Integer account_ID,
                         List<Integer> player_IDs,
                         @Size(max = 32, min = 8)

@@ -14,9 +14,9 @@ import org.springframework.core.convert.support.DefaultConversionService;
 @ComponentScan
 public class ApplicationConfig {
     @Bean
-    public DefaultConversionService getConversionService() {
+    public DefaultConversionService getConversionService(TwoWayAccountConverter twoWayAccountConverter) {
         DefaultConversionService service = new DefaultConversionService();
-        service.addConverter(new TwoWayAccountConverter());
+        service.addConverter(twoWayAccountConverter);
         service.addConverter(new TwoWayGameConverter());
         service.addConverter(new TwoWayGameplayerConverter());
         service.addConverter(new TwoWayTeamConverter());

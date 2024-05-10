@@ -15,11 +15,15 @@ import java.util.List;
 @Component
 public class TwoWayAccountConverter extends AbstractTwoWayConverter<Account, AccountDTO> {
 
-    @Autowired
-    private PlayerService playerService;
+    private final PlayerService playerService;
+
+    private final AccountService accountService;
 
     @Autowired
-    private AccountService accountService;
+    public TwoWayAccountConverter(PlayerService playerService, AccountService accountService) {
+        this.playerService = playerService;
+        this.accountService = accountService;
+    }
 
     @Override
     protected AccountDTO convert(Account account) {

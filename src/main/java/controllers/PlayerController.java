@@ -5,16 +5,15 @@ import main.java.databank.game.player.Player;
 import main.java.services.DBServices.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.support.DefaultConversionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/Player")
+@Validated
 public class PlayerController {
 
     @Autowired
@@ -23,8 +22,8 @@ public class PlayerController {
     @Autowired
     private DefaultConversionService defaultConversionService;
 
-    @RequestMapping(value = "/newPlayer", method = RequestMethod.POST)
-    public PlayerDTO submitPlayer(PlayerDTO playerDTO) {
+    @PostMapping(value = "/newPlayer")
+    public PlayerDTO submitPlayer(@RequestBody @Validated PlayerDTO playerDTO) {
         Player player = defaultConversionService.convert(playerDTO, Player.class);
         playerService.savePlayer(player);
         return playerDTO;

@@ -1,4 +1,4 @@
-package main.java.controllers.validations.annotations;
+package main.java.controllers.validations.annotations.notexistsindb;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -8,15 +8,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ExistsInDBValidator implements ConstraintValidator<ExistsInDB, Object> {
+public class NotExistsInDBValidator implements ConstraintValidator<NotExistsInDB, Object> {
 
-    private ExistsInDB constraintAnnotation;
+    private NotExistsInDB constraintAnnotation;
 
     @Autowired
     private ApplicationContext applicationContext;
 
     @Override
-    public void initialize(ExistsInDB constraintAnnotation) {
+    public void initialize(NotExistsInDB constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
         this.constraintAnnotation = constraintAnnotation;
     }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import main.java.databank.game.game.Game;
 import main.java.databank.game.gameplayer.GamePlayer;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.Set;
 
@@ -18,19 +19,18 @@ public class Team {
     @ManyToOne
     private Game game;
 
+    private Integer score;
+
     @OneToMany(cascade = CascadeType.ALL)
     private Set<GamePlayer> players;
 
     public Team() {}
 
-    public Team(Set<GamePlayer> gamePlayers) {
-        this.players = gamePlayers;
-    }
-
-    public Team(Integer team_ID, Game game, Set<GamePlayer> players) {
+    public Team(Integer team_ID, Game game, Set<GamePlayer> players, Integer score) {
         this.team_ID = team_ID;
         this.game = game;
         this.players = players;
+        this.score = score;
     }
 
     //Methods
@@ -38,6 +38,14 @@ public class Team {
         double sum = 0;
         for(GamePlayer gamePlayer: players) sum += gamePlayer.getElo();
         return sum;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     public Integer size() {

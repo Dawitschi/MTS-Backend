@@ -26,54 +26,40 @@ public class Game {
     @ManyToOne
     private main.java.databank.game.table.Table table;
 
-    private Integer team1Score;
-
-    private Integer team2Score;
-
     private boolean gameFinished;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Score> scores;
 
     public Game() {
-        this.scores = new ArrayList<>();
-        this.teams = new ArrayList<>();
-        teams.add(null);
-        teams.add(null);
+
     }
 
-    public Game(LocalDateTime time, Team team1, Team team2, Integer team1Score, Integer team2Score, boolean gameFinished) {
+    public Game(LocalDateTime time, Team team1, Team team2, boolean gameFinished) {
         this.timeOfGame = time;
         this.teams = new ArrayList<>();
         teams.add(team1);
         teams.add(team2);
-        this.team1Score = team1Score;
-        this.team2Score = team2Score;
         this.gameFinished = gameFinished;
         this.scores = new ArrayList<>();
     }
 
-    public Game(Integer game_ID, LocalDateTime time, Team team1, Team team2, Integer team1Score, Integer team2Score, boolean gameFinished) {
+    public Game(Integer game_ID, LocalDateTime time, Team team1, Team team2, boolean gameFinished) {
         this.game_ID = game_ID;
         this.timeOfGame = time;
         this.teams = new ArrayList<>();
         teams.add(team1);
         teams.add(team2);
-        this.team1Score = team1Score;
-        this.team2Score = team2Score;
         this.gameFinished = gameFinished;
         this.scores = new ArrayList<>();
     }
 
     public Game(Integer game_ID, LocalDateTime timeOfGame, List<Team> teams,
-                main.java.databank.game.table.Table table, Integer team1Score,
-                Integer team2Score, boolean gameFinished, List<Score> scores) {
+                main.java.databank.game.table.Table table, boolean gameFinished, List<Score> scores) {
         this.game_ID = game_ID;
         this.timeOfGame = timeOfGame;
         this.teams = teams;
         this.table = table;
-        this.team1Score = team1Score;
-        this.team2Score = team2Score;
         this.gameFinished = gameFinished;
         this.scores = scores;
     }
@@ -135,18 +121,11 @@ public class Game {
     }
 
     public Integer getTeam1Score() {
-        return team1Score;
-    }
-
-    public void setTeam1Score(Integer team1Score) {
-        this.team1Score = team1Score;
+        return teams.get(0).getScore();
     }
 
     public Integer getTeam2Score() {
-        return team2Score;
+        return teams.get(1).getScore();
     }
 
-    public void setTeam2Score(Integer team2Score) {
-        this.team2Score = team2Score;
-    }
 }

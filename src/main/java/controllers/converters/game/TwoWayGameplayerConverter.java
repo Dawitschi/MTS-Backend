@@ -1,7 +1,7 @@
-package main.java.controllers.http.converters.game;
+package main.java.controllers.converters.game;
 
-import main.java.controllers.http.converters.AbstractTwoWayConverter;
-import main.java.controllers.http.dtos.GameplayerDTO;
+import main.java.controllers.converters.AbstractTwoWayConverter;
+import main.java.controllers.dtos.GameplayerDTO;
 import main.java.databank.game.gameplayer.GamePlayer;
 import main.java.databank.game.player.Player;
 import main.java.databank.game.team.Team;

@@ -1,4 +1,4 @@
-package main.java.controllers.http.dtos;
+package main.java.controllers.dtos;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
@@ -15,6 +15,10 @@ public record TeamDTO(
         @ExistsInDB(repo = TeamRepository.class, groups = onUpdate.class)
         Integer team_ID,
         Integer game_ID,
-        List<Integer> player_IDs)
+
+        Integer score,
+        @ExistsInDB(repo = TeamRepository.class)
+        List<GameplayerDTO> player_IDs
+)
 {
 }

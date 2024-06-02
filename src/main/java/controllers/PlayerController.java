@@ -1,6 +1,6 @@
 package main.java.controllers;
 
-import main.java.controllers.http.dtos.PlayerDTO;
+import main.java.controllers.dtos.PlayerDTO;
 import main.java.databank.game.player.Player;
 import main.java.services.DBServices.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class PlayerController {
     @Autowired
     private DefaultConversionService defaultConversionService;
 
-    @PostMapping(value = "/newPlayer")
+    @PostMapping(value = "/createPlayer")
     public PlayerDTO submitPlayer(@RequestBody @Validated PlayerDTO playerDTO) {
         Player player = defaultConversionService.convert(playerDTO, Player.class);
         playerService.savePlayer(player);

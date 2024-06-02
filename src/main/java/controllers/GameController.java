@@ -1,10 +1,11 @@
 package main.java.controllers;
 
-import main.java.controllers.http.dtos.GameDTO;
+import main.java.controllers.dtos.GameDTO;
 import main.java.controllers.validations.annotations.existsindb.ExistsInDB;
 import main.java.databank.game.game.Game;
 import main.java.databank.game.table.Table;
 import main.java.databank.game.table.TableRepository;
+import main.java.services.DBServices.GameService;
 import main.java.services.DBServices.TableService;
 import main.java.services.EloCalculatorService;
 import org.hibernate.validator.constraints.Range;
@@ -28,17 +29,28 @@ public class GameController {
     private TableService tableService;
 
     @Autowired
+    private GameService gameService;
+
+    @Autowired
     private DefaultConversionService defaultConversionService;
 
 
+    @GetMapping(value = "/AllGames")
+    public List<GameDTO> getGames() {
+        List<Game> games = gameService.getGames();
+        List<GameDTO> gameDTOS = new ArrayList<>();
+        games.forEach(game -> gameDTOS.add(defaultConversionService.convert(game, GameDTO.class)));
+        return gameDTOS;
+    }
+
     @PostMapping(value = "/newGame")
     public GameDTO newGame(@RequestBody @Validated GameDTO gameDTO) {
-        Game game = defaultConversionService.convert(gameDTO, Game.class);
+        Game game = gameService.createGame(gameDTO);
         eloCalculatorService.reevaluateElos(game);
         return gameDTO;
     }
 
-    @GetMapping(value = "/fromTableN")
+    @GetMapping(value = "/fromTable")
     public List<GameDTO> getGamesFromTable(@ExistsInDB(repo = TableRepository.class) @RequestBody Integer tableID, @Range(max = 100, min = 1) @RequestBody Integer n) {
         Table table = tableService.getTable(tableID);
         List<Game> games = tableService.getRecentGames(table, n);

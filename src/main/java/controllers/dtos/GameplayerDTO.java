@@ -1,4 +1,4 @@
-package main.java.controllers.http.dtos;
+package main.java.controllers.dtos;
 
 import jakarta.validation.constraints.Null;
 import main.java.controllers.validations.annotations.existsindb.ExistsInDB;

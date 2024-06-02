@@ -1,10 +1,10 @@
 package main.java;
 
-import main.java.controllers.http.converters.account.TwoWayAccountConverter;
-import main.java.controllers.http.converters.game.TwoWayGameConverter;
-import main.java.controllers.http.converters.game.TwoWayGameplayerConverter;
-import main.java.controllers.http.converters.game.TwoWayPlayerConverter;
-import main.java.controllers.http.converters.game.TwoWayTeamConverter;
+import main.java.controllers.converters.account.TwoWayAccountConverter;
+import main.java.controllers.converters.game.TwoWayGameConverter;
+import main.java.controllers.converters.game.TwoWayGameplayerConverter;
+import main.java.controllers.converters.game.TwoWayPlayerConverter;
+import main.java.controllers.converters.game.TwoWayTeamConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,13 +14,19 @@ import org.springframework.core.convert.support.DefaultConversionService;
 @ComponentScan
 public class ApplicationConfig {
     @Bean
-    public DefaultConversionService getConversionService(TwoWayAccountConverter twoWayAccountConverter) {
+    public DefaultConversionService getConversionService(
+            TwoWayAccountConverter twoWayAccountConverter,
+            TwoWayGameConverter twoWayGameConverter,
+            TwoWayGameplayerConverter twoWayGameplayerConverter,
+            TwoWayTeamConverter twoWayTeamConverter,
+            TwoWayPlayerConverter twoWayPlayerConverter
+    ) {
         DefaultConversionService service = new DefaultConversionService();
         service.addConverter(twoWayAccountConverter);
-        service.addConverter(new TwoWayGameConverter());
-        service.addConverter(new TwoWayGameplayerConverter());
-        service.addConverter(new TwoWayTeamConverter());
-        service.addConverter(new TwoWayPlayerConverter());
+        service.addConverter(twoWayGameConverter);
+        service.addConverter(twoWayGameplayerConverter);
+        service.addConverter(twoWayTeamConverter);
+        service.addConverter(twoWayPlayerConverter);
         return service;
     }
 }

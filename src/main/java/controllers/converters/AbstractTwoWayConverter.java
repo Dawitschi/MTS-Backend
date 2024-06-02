@@ -1,4 +1,4 @@
-package main.java.controllers.http.converters;
+package main.java.controllers.converters;
 
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;

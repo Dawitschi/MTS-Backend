@@ -1,7 +1,7 @@
-package main.java.controllers.http.converters.account;
+package main.java.controllers.converters.account;
 
-import main.java.controllers.http.converters.AbstractTwoWayConverter;
-import main.java.controllers.http.dtos.AccountDTO;
+import main.java.controllers.converters.AbstractTwoWayConverter;
+import main.java.controllers.dtos.AccountDTO;
 import main.java.databank.accounts.Account;
 import main.java.databank.game.player.Player;
 import main.java.services.DBServices.AccountService;

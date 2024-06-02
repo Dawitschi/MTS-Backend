@@ -1,28 +1,25 @@
-package main.java.controllers.http.dtos;
+package main.java.controllers.dtos;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import main.java.controllers.validations.annotations.existsindb.ExistsInDB;
 import main.java.controllers.validations.markers.onCreation;
 import main.java.controllers.validations.markers.onUpdate;
+import main.java.databank.accounts.AccountRepository;
 import main.java.databank.game.game.GameRepository;
-import main.java.databank.game.table.TableRepository;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
-public record GameDTO(
+public record PlayerDTO(
+        @NotNull()
+        @ExistsInDB(repo = AccountRepository.class)
+        Integer account_ID,
         @Null(groups = onCreation.class)
         @NotNull(groups = onUpdate.class)
         @ExistsInDB(repo = GameRepository.class, groups = onUpdate.class)
-        Integer game_ID,
-        LocalDateTime timeOfGame,
-        boolean gameFinished,
-        Integer team1ID,
-        Integer team2ID,
-        Integer team1Score,
-        Integer team2Score,
-        @ExistsInDB(repo = TableRepository.class)
-        Integer table_ID,
-        List<Integer> score_IDs) {
+        Integer player_ID,
+        double elo,
+        String name,
+        String nickname,
+        Set<Integer> gamePlayer_IDs) {
 }

@@ -1,6 +1,6 @@
 package main.java.controllers;
 
-import main.java.controllers.http.dtos.PlayerDTO;
+import main.java.controllers.dtos.PlayerDTO;
 import main.java.databank.game.player.Player;
 import main.java.services.LeaderboardService;
 import org.springframework.beans.factory.annotation.Autowired;

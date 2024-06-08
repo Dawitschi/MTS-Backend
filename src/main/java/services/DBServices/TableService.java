@@ -36,7 +36,8 @@ public class TableService {
         //TODO: This can (probably) be rewritten as a sql Query
         List<Game> games = table.getGames();
         games.sort(Comparator.comparing(Game::getTimeOfGame));
-        return games.subList(0, n);
+
+        return games.subList(0, Math.min(n, games.size()));
     }
 
     /**

@@ -64,6 +64,18 @@ public class Game {
         this.scores = scores;
     }
 
+    @Override
+    public String toString() {
+        return "Game{" +
+                "game_ID=" + game_ID +
+                ", timeOfGame=" + timeOfGame +
+                ", teams=" + teams +
+                ", table=" + table +
+                ", gameFinished=" + gameFinished +
+                ", scores=" + scores +
+                '}';
+    }
+
     public main.java.databank.game.table.Table getTable() {
         return table;
     }

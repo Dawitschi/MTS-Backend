@@ -55,6 +55,7 @@ public class EloCalculatorService {
 
         //Adjusting the players elos
          HashMap<Player, Double> playerEloIncrease = adjustPlayerElos(results,expectedResults,teamElos);
+
          //Save all Entitys
          save(game, playerEloIncrease);
     }

@@ -1,10 +1,8 @@
 package main.java.databank.game.team;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 import main.java.databank.game.game.Game;
 import main.java.databank.game.gameplayer.GamePlayer;
-import org.springframework.context.annotation.Lazy;
 
 import java.util.Set;
 
@@ -38,6 +36,16 @@ public class Team {
         double sum = 0;
         for(GamePlayer gamePlayer: players) sum += gamePlayer.getElo();
         return sum;
+    }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "team_ID=" + team_ID +
+                ", game=" + game.getGame_ID() +
+                ", score=" + score +
+                ", players=" + players +
+                '}';
     }
 
     public Integer getScore() {

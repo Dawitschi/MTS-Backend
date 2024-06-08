@@ -24,7 +24,7 @@ public class GameplayerService {
     }
 
     public GamePlayer createGameplayer(GameplayerDTO gameplayerDTO) {
-        GamePlayer gamePlayer = new GamePlayer(gameplayerDTO.gamesPlayer_ID(), gameplayerDTO.position(),
+        GamePlayer gamePlayer = new GamePlayer(gameplayerDTO.position(),
                 playerService.getPlayerbyID(gameplayerDTO.player_ID()), null, gameplayerDTO.elo());
         return gamePlayer;
     }

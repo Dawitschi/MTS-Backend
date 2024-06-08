@@ -33,7 +33,7 @@ public class TwoWayAccountConverter extends AbstractTwoWayConverter<Account, Acc
         List<Integer> friendIDs = new ArrayList<>();
         for (Account friend : account.getFriends()) friendIDs.add(friend.getAccount_ID());
 
-        return new AccountDTO(account.getAccount_ID(), playerIDs, account.getPassword(), account.getToken(), account.getUsername(), friendIDs);
+        return new AccountDTO(account.getAccount_ID(), playerIDs, account.getPassword(), account.getCreation_Token(), account.getUsername(), friendIDs);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class TwoWayAccountConverter extends AbstractTwoWayConverter<Account, Acc
         List<Account> friends = new ArrayList<>();
         for (Integer friendID : accountDTO.friend_IDs()) friends.add(accountService.getAccountbyID(friendID));
 
-        return new Account(accountDTO.account_ID(),players, accountDTO.password(), accountDTO.token(), accountDTO.username(), friends);
+        return new Account(accountDTO.account_ID(),players, accountDTO.password(), accountDTO.creation_Token(), accountDTO.username(), friends);
 
     }
 }

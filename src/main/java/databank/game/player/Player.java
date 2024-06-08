@@ -16,7 +16,7 @@ import java.util.Set;
 public class Player {
     private final double INITIAL_ELO = 1000.0d;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Account account;
 
     @Id

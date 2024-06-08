@@ -29,7 +29,7 @@ public class TeamService {
     public Team createTeam(TeamDTO teamDTO) {
         Set<GamePlayer> gamePlayers = new HashSet<>();
         for (GameplayerDTO gameplayerDTO : teamDTO.player_IDs()) gamePlayers.add(gameplayerService.createGameplayer(gameplayerDTO));
-        Team team = new Team(teamDTO.team_ID(), null, gamePlayers, teamDTO.game_ID());
+        Team team = new Team(teamDTO.team_ID(), null, gamePlayers, teamDTO.score());
         for (GamePlayer gameplayer : gamePlayers) gameplayer.setTeams(team);
         return team;
     }

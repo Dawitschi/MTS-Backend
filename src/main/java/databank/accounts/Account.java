@@ -21,7 +21,7 @@ public class Account {
     @Size(max = 32, min = 8)
     private String password;
 
-    private String token;
+    private String creation_Token;
 
     @Size(max = 32, min = 8)
     private String username;
@@ -31,19 +31,19 @@ public class Account {
 
     public Account() {}
 
-    public Account(List<Player> players, String password, String token, String username, List<Account> friends) {
+    public Account(List<Player> players, String password, String creation_Token, String username, List<Account> friends) {
         this.players = players;
         this.password = password;
-        this.token = token;
+        this.creation_Token = creation_Token;
         this.username = username;
         this.friends = friends;
     }
 
-    public Account(Integer account_ID, List<Player> players, String password, String token, String username, List<Account> friends) {
+    public Account(Integer account_ID, List<Player> players, String password, String creation_Token, String username, List<Account> friends) {
         this.account_ID = account_ID;
         this.players = players;
         this.password = password;
-        this.token = token;
+        this.creation_Token = creation_Token;
         this.username = username;
         this.friends = friends;
     }
@@ -54,18 +54,18 @@ public class Account {
                 "account_ID=" + account_ID +
                 ", players=" + players +
                 ", password='" + password + '\'' +
-                ", token='" + token + '\'' +
+                ", creation_Token='" + creation_Token + '\'' +
                 ", username='" + username + '\'' +
                 ", friends=" + friends +
                 '}';
     }
 
-    public String getToken() {
-        return token;
+    public String getCreation_Token() {
+        return creation_Token;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setCreation_Token(String token) {
+        this.creation_Token = token;
     }
 
     public Integer getAccount_ID() {

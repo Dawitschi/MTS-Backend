@@ -3,16 +3,14 @@ package main.java.services.DBServices;
 import main.java.controllers.dtos.GameDTO;
 import main.java.databank.game.game.Game;
 import main.java.databank.game.game.GameRepository;
-import main.java.databank.game.gameplayer.GamePlayer;
-import main.java.databank.game.player.Player;
 import main.java.databank.game.score.Score;
-import main.java.databank.game.table.Table;
 import main.java.databank.game.team.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class GameService {

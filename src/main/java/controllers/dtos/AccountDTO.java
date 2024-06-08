@@ -20,7 +20,7 @@ public record AccountDTO(
                         List<Integer> player_IDs,
                         @Size(max = 32, min = 8)
                         String password,
-                        String token,
+                        String creation_Token,
                         @Size(max = 32, min = 8)
                         String username,
                         @Null(groups = onCreation.class)

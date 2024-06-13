@@ -44,7 +44,12 @@ public class TwoWayAccountConverter extends AbstractTwoWayConverter<Account, Acc
         List<Account> friends = new ArrayList<>();
         for (Integer friendID : accountDTO.friend_IDs()) friends.add(accountService.getAccountbyID(friendID));
 
-        return new Account(accountDTO.account_ID(),players, accountDTO.password(), accountDTO.creation_Token(), accountDTO.username(), friends);
+        boolean expired = accountService.getAccountbyID(accountDTO.account_ID()).isExpired();
+        boolean locked = accountService.getAccountbyID(accountDTO.account_ID()).isLocked();
+
+
+        return new Account(accountDTO.account_ID(),players, accountDTO.password(), accountDTO.creation_Token(),
+                accountDTO.username(), friends, accountService.getAccountbyID(accountDTO.account_ID()).getRoles(), expired, locked);
 
     }
 }

@@ -2,11 +2,15 @@ package main.java.controllers;
 
 import main.java.controllers.dtos.AccountDTO;
 import main.java.controllers.validations.markers.onCreation;
+import main.java.controllers.validations.markers.onLogIn;
 import main.java.databank.accounts.Account;
 import main.java.services.DBServices.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +28,10 @@ public class AccountController {
 
     @Autowired
     private DefaultConversionService defaultConversionService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
 
     @PostMapping("/newAccount")
@@ -44,6 +52,20 @@ public class AccountController {
             list.add(defaultConversionService.convert(account, AccountDTO.class));
         }
         return ResponseEntity.ok(list);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> loginAccount(@RequestBody AccountDTO account, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            StringBuilder builder = new StringBuilder("The following errors where found: \n");
+            bindingResult.getAllErrors().forEach(err -> builder.append(err.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(builder.toString());
+        }
+
+        Authentication authentication = UsernamePasswordAuthenticationToken.unauthenticated(account.username(), account.password());
+        Authentication authenticationResponse = this.authenticationManager.authenticate(authentication);
+
+        return ResponseEntity.ok(authenticationResponse);
     }
 
     @GetMapping("/{id}")
